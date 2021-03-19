@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huayi.mapper.SysRoleMapper">
+
+    <select id="selectRoleByUserId" resultType="com.huayi.entity.SysRole">
+        select
+        <include refid="baseColumn"/>
+        from sys_role where id in (select role_id from sys_user_role where user_id = #{userId})
+    </select>
+
+
+    <sql id="baseColumn">
+        id,name,`desc`,deleted,create_time,update_time,update_user
+    </sql>
+
+</mapper>

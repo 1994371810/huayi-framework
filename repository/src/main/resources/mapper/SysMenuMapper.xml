@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huayi.mapper.SysMenuMapper">
+
+
+    <select id="selectMenuByRoleId" resultType="com.huayi.entity.SysMenu">
+        select distinct
+        <include refid="baseColumn"/>
+        from sys_menu where id in (select menu_id from sys_role_menu where role_id = #{roleId})
+    </select>
+
+
+    <select id="selectMenuByUserId" resultType="com.huayi.entity.SysMenu">
+        select distinct
+        <include refid="baseColumn"/>
+        from sys_menu id where id  in (select menu_id from sys_role_menu where role_id in (select role_id from sys_user_role where user_id = #{userId} ))
+    </select>
+
+
+
+    <sql id="baseColumn">
+        id,name,`desc`,deleted, parent_id,create_time,update_time,update_user,authorities
+    </sql>
+
+
+</mapper>

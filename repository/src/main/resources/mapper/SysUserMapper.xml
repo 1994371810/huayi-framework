@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.huayi.mapper.SysUserMapper">
+
+    <select id="selectUserByUsername" resultMap="roleAndMenuMap">
+        select
+        <include refid="baseColume"/>
+        from sys_user where name = #{username} limit 1
+    </select>
+
+
+
+    <resultMap id="roleAndMenuMap" type="com.huayi.entity.SysUser">
+        <id property="id" column="id"/>
+        <collection property="roles" column="id" select="com.huayi.mapper.SysRoleMapper.selectRoleByUserId"/>
+        <collection property="menus" column="id" select="com.huayi.mapper.SysMenuMapper.selectMenuByUserId"/>
+    </resultMap>
+
+
+
+    <sql id="baseColume">
+        id,name,password,deleted,create_time,update_time,update_user
+    </sql>
+
+</mapper>
